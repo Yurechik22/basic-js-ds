@@ -1,6 +1,3 @@
-const { NotImplementedError } = require('../lib');
-// const { ListNode } = require('../extensions/list-node.js');
-
 /**
  * Given a singly linked list of integers l and an integer k,
  * remove all elements from list l that have a value equal to k.
@@ -21,11 +18,26 @@ const { NotImplementedError } = require('../lib');
  *   }
  * }
  */
-function removeKFromList(/* l, k */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+function removeKFromList(l, k) {
+  // 1. Убираем k с начала списка (их может быть несколько подряд)
+  while (l && l.value === k) {
+    l = l.next;
+  }
+ 
+  // 2. Идём по списку и «перепрыгиваем» узлы со значением k
+  let current = l;
+  while (current && current.next) {
+    if (current.next.value === k) {
+      current.next = current.next.next; // выкидываем следующий узел
+    } else {
+      current = current.next;           // идём дальше
+    }
+  }
+ 
+  return l;
 }
-
+ 
 module.exports = {
   removeKFromList
 };
+ 

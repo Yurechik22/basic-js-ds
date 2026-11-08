@@ -1,6 +1,5 @@
-const { NotImplementedError } = require('../lib');
 // const { ListNode } = require('../extensions/list-node.js');
-
+ 
 /**
  * Implement the Queue with a given interface via linked list (use ListNode extension above).
  *
@@ -13,22 +12,44 @@ const { NotImplementedError } = require('../lib');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
+  constructor() {
+    this.head = null; // начало очереди (отсюда забираем)
+    this.tail = null; // конец очереди (сюда добавляем)
+  }
+ 
   getUnderlyingList() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    return this.head;
   }
-
-  enqueue(/* value */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+ 
+  enqueue(value) {
+    // узел той же формы, что ListNode: { value, next }.
+    // Обычный объект, потому что тесты сравнивают через deepStrictEqual,
+    // а он проверяет и класс объекта.
+    const node = { value, next: null };
+ 
+    if (!this.head) {
+      // очередь пустая: новый узел и начало, и конец
+      this.head = node;
+      this.tail = node;
+    } else {
+      this.tail.next = node; // цепляем за последним
+      this.tail = node;      // теперь он последний
+    }
   }
-
+ 
   dequeue() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    if (!this.head) return undefined;
+ 
+    const value = this.head.value;
+    this.head = this.head.next; // сдвигаем начало на следующий узел
+ 
+    if (!this.head) this.tail = null; // очередь опустела
+ 
+    return value;
   }
 }
-
+ 
 module.exports = {
   Queue
 };
+ 
